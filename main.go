@@ -136,7 +136,7 @@ func SendMessage(like Like) {
 		"chat_id":      {config.ChatID},
 		"caption":      {like.title + "\n" + like.link},
 		"photo":        {like.src[0]},
-		"reply_markup": {fmt.Sprintf(`{"inline_keyboard":[[{"text":"🌏","url":"%s"},{"text":"⤵","url":"https://pixiv.re/%s"}]]}`, like.link, like.pid)},
+		"reply_markup": {fmt.Sprintf(`{"inline_keyboard":[[{"text":"🌏","url":"%s"},{"text":"⤵","url":"https://pixiv.re/%s.jpg"}]]}`, like.link, like.pid)},
 	}
 	tgBotUrl := "https://api.telegram.org/bot" + config.TgBotToken + "/sendPhoto"
 	resp, err := client.PostForm(tgBotUrl, formData)
