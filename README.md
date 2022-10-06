@@ -2,7 +2,7 @@
 
 将Pixiv收藏夹的内容同步到Telegram频道,以便管理自己收藏的图片
 
-<img src="https://s2.loli.net/2022/10/06/lc97ogXRYxJFkbj.jpg" alt="图片" style="zoom:50%;" />
+<img src="https://s2.loli.net/2022/10/06/lc97ogXRYxJFkbj.jpg" alt="图片" style="zoom:15%;" />
 
 更新时间跟随RSSHub缓存刷新时间,为2小时
 
