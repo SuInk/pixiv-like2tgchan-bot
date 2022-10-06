@@ -6,7 +6,7 @@
 
 每次最多获取30个收藏
 
-![图片](https://s2.loli.net/2022/10/06/lc97ogXRYxJFkbj.jpg)
+[查看截图](https://s2.loli.net/2022/10/06/lc97ogXRYxJFkbj.jpg)
 
 ## 如何使用
 
@@ -27,11 +27,11 @@
 
    填入
 
-   > UseProxy = true //是否使用代理
-   > ProxyURL    = "http://127.0.0.1:7890"//代理网址
-   > RssURL      = "https://rsshub.app/pixiv/user/bookmarks/15288095"//需要订阅的PixivRSS地址
-   > TgBotToken  = "1234567892:AAG" //Telegram 机器人token
-   > ChatID      = "@SuInks" // 频道名
+   > UseProxy = true //是否使用代理  
+   > ProxyURL    = "http://127.0.0.1:7890"//代理网址  
+   > RssURL      = "https://rsshub.app/pixiv/user/bookmarks/15288095"//需要订阅的PixivRSS地址  
+   > TgBotToken  = "1234567892:AAG" //Telegram 机器人token  
+   > ChatID      = "@SuInks" // 频道名  
    > RefreshTime = 120 // 定时刷新分钟, RSSHub默认缓存时间为2小时
 3. 获取参数
   * 如果你用的是国外服务器`UseProxy`填`false`即可
