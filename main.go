@@ -1,13 +1,14 @@
 package main
 
 import (
-	"bookmark2tgchan-bot/config"
 	"database/sql"
 	"github.com/PuerkitoBio/goquery"
+	"github.com/labstack/echo/v4"
 	_ "github.com/mattn/go-sqlite3"
 	"log"
 	"net/http"
 	"net/url"
+	"pixiv-like2tgchan-bot/config"
 	"regexp"
 	"time"
 )
@@ -145,28 +146,35 @@ func SendMessage(like Like) {
 	}
 	//log.Println(like)
 }
-func main() {
+func StartTask() {
 	cursor := GetDb()
 	cursor = InitDb(cursor)
 	// 定时运行
-	log.Println("start task...")
 	for {
 		likes, err := GetLikes()
-		log.Println(likes)
+		//log.Println(likes)
 		if err != nil {
 			log.Fatal(err)
 		}
-		for _, like := range likes {
+		for i, like := range likes {
 			// 如果数据库中存在该条记录，不处理
 			if Check(cursor, like.link) {
 				// SendMessage(like)
-				log.Println("已存在", like.link)
+				log.Println(i+1, "已存在", like.link)
 			} else {
 				SendMessage(like)
 				SaveLike(cursor, like)
-				log.Println("保存成功", like.link)
+				log.Println(i+1, "保存成功", like.link)
 			}
 		}
+		log.Printf("refresh %d minutes later...", config.RefreshTime)
 		time.Sleep(time.Duration(config.RefreshTime) * time.Minute)
 	}
+}
+func main() {
+	e := echo.New()
+	e.Static("/", "public")
+	go StartTask()
+	log.Println("start task...")
+	e.Logger.Fatal(e.Start(":1323"))
 }
