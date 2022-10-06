@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/labstack/echo/v4"
 	_ "github.com/mattn/go-sqlite3"
@@ -19,6 +20,7 @@ type Like struct {
 	url         string
 	pubDate     string
 	link        string
+	pid         string
 	src         []string
 }
 
@@ -67,6 +69,7 @@ func GetLikes() ([]Like, error) {
 		description := s.Find("description").Text()
 		pubDate := s.Find("pubDate").Text()
 		link := s.Find("guid").Text()
+		pid := regexp.MustCompile("(\\d+)").FindStringSubmatch(link)[1]
 		srcs := make([]string, 0)
 		s.Find("img").Each(func(i int, s *goquery.Selection) {
 			src, _ := s.Attr("src")
@@ -77,6 +80,7 @@ func GetLikes() ([]Like, error) {
 			description: description,
 			pubDate:     pubDate,
 			link:        link,
+			pid:         pid,
 			src:         srcs,
 		}
 		likes = append(likes, like)
@@ -129,9 +133,10 @@ func SendMessage(like Like) {
 		log.Fatal(err)
 	}
 	formData := url.Values{
-		"chat_id": {config.ChatID},
-		"caption": {like.title + "\n" + like.link},
-		"photo":   {like.src[0]},
+		"chat_id":      {config.ChatID},
+		"caption":      {like.title + "\n" + like.link},
+		"photo":        {like.src[0]},
+		"reply_markup": {fmt.Sprintf(`{"inline_keyboard":[[{"text":"🌏","url":"%s"},{"text":"⤵","url":"https://pixiv.re/%s"}]]}`, like.link, like.pid)},
 	}
 	tgBotUrl := "https://api.telegram.org/bot" + config.TgBotToken + "/sendPhoto"
 	resp, err := client.PostForm(tgBotUrl, formData)
