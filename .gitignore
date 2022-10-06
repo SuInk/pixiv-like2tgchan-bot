@@ -1,0 +1,5 @@
+*.exe
+*.log
+.idea
+foo.db
+config.go

@@ -1,0 +1,9 @@
+package config
+
+var (
+	ProxyURL    = "http://127.0.0.1:7890"
+	RssURL      = "https://rsshub.app/pixiv/user/bookmarks/15288095"
+	TgBotToken  = "1234567892:AAG"
+	ChatID      = "@SuInks"
+	RefreshTime = 120 // 分钟
+)
