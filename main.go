@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"time"
 )
 
 type Like struct {
@@ -25,6 +26,9 @@ func init() {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 }
 func Client() (http.Client, error) {
+	if config.UseProxy == false {
+		return http.Client{}, nil
+	}
 	// 设置clash代理
 	uri, err := url.Parse(config.ProxyURL)
 	if err != nil {
@@ -139,30 +143,30 @@ func SendMessage(like Like) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Println(like)
+	//log.Println(like)
 }
 func main() {
 	cursor := GetDb()
 	cursor = InitDb(cursor)
-	//t := time.Tick(time.Minute * 60)
 	// 定时运行
 	log.Println("start task...")
-	//for _ = range t {
-	likes, err := GetLikes()
-	log.Println(likes)
-	if err != nil {
-		log.Fatal(err)
-	}
-	for _, like := range likes {
-		// 如果数据库中存在该条记录，不处理
-		if Check(cursor, like.link) {
-			// SendMessage(like)
-			log.Println("已存在", like.link)
-		} else {
-			SendMessage(like)
-			SaveLike(cursor, like)
-			log.Println("保存成功", like.link)
+	for {
+		likes, err := GetLikes()
+		log.Println(likes)
+		if err != nil {
+			log.Fatal(err)
 		}
+		for _, like := range likes {
+			// 如果数据库中存在该条记录，不处理
+			if Check(cursor, like.link) {
+				// SendMessage(like)
+				log.Println("已存在", like.link)
+			} else {
+				SendMessage(like)
+				SaveLike(cursor, like)
+				log.Println("保存成功", like.link)
+			}
+		}
+		time.Sleep(time.Duration(config.RefreshTime) * time.Minute)
 	}
-	//}
 }
