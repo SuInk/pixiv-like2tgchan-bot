@@ -26,13 +26,14 @@
    ```
 
    填入
-
-   > UseProxy = true	//是否使用代理  
-   > ProxyURL    = "http://127.0.0.1:7890"	// 代理网址  
-   > RssURL      = "https://rsshub.app/pixiv/user/bookmarks/15288095"	// 需要订阅的PixivRSS地址  
-   > TgBotToken  = "1234567892:AAG" 	// Telegram 机器人token  
-   > ChatID      = "@SuInks"	// 频道名  
-   > RefreshTime = 120 	// 定时刷新分钟, RSSHub默认缓存时间为2小时
+   ```bash
+   UseProxy = true	//是否使用代理  
+   ProxyURL    = "http://127.0.0.1:7890"	// 代理网址  
+   RssURL      = "https://rsshub.app/pixiv/user/bookmarks/15288095"	// 需要订阅的PixivRSS地址  
+   TgBotToken  = "1234567892:AAG" 	// Telegram 机器人token  
+   ChatID      = "@SuInks"	// 频道名  
+   RefreshTime = 120 	// 定时刷新分钟, RSSHub默认缓存时间为2小时
+   ```
 3. 获取参数
   * 如果你用的是国外服务器`UseProxy`填`false`即可
   * `ProxyURL`为[Clash](https://github.com/Dreamacro/clash/releases)默认代理地址, 可以参考[教程](https://www.idcbuy.net/it/linux/2433.html)安装
